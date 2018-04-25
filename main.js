@@ -66,8 +66,8 @@ B = f => g => a => f(g(a));
 // composition of functions
 
 // Thrush: a combinator
-T = f => g => g(f);
-// reverse of composition
+TH = f => g => g(f);
+// 
 
 
 
@@ -106,11 +106,17 @@ zero = f => a => a;
 once = f => a => f(a);
 twice = f => a => f(f(a));
 thrice = f => a => f(f(f(a)));
-
-// Church arithmetic
 // The Peano Numbers
 succ = n => f => a => f(n(f)(a));
 // succ = n => f => B(f)(n(f));
-
 num = n => n(x => x+1)(0);
 // e.g. num(once) = 1, num(twice) = 2, num(succ(zero)) = 1
+
+
+// ===================================Church arithmetic=============================
+add = n => k => n(succ)(k);
+mul = B;
+pow = TH;
+// pow = n => k => k(n)
+
+iszero = n => n(K(F))(T);
