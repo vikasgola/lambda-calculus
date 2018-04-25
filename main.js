@@ -61,6 +61,14 @@ C = f => a => b=> f(b)(a);
 // reverse the arguments
 
 
+// Bluebird: a combinator
+B = f => g => a => f(g(a));
+// composition of functions
+
+// Thrush: a combinator
+T = f => g => g(f);
+// reverse of composition
+
 
 
 
@@ -88,3 +96,21 @@ or = a => b => a(a)(b);
 // XOR
 xor = a => b => or(and(a)(b))(and(not(a))(not(b)));
 // xor = a => b => a(b(T)(F))(b(F)(T))
+// xor = a=> b => a(b)(not(b))
+
+
+//  ================================= Numbers in lamba calculus ===================
+
+// Church encoding: (Numerals)
+zero = f => a => a;
+once = f => a => f(a);
+twice = f => a => f(f(a));
+thrice = f => a => f(f(f(a)));
+
+// Church arithmetic
+// The Peano Numbers
+succ = n => f => a => f(n(f)(a));
+// succ = n => f => B(f)(n(f));
+
+num = n => n(x => x+1)(0);
+// e.g. num(once) = 1, num(twice) = 2, num(succ(zero)) = 1
