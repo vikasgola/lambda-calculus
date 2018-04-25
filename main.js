@@ -19,35 +19,35 @@ div = a => b => a/b;
 
 
 
-// ================Combinators=============
+// ==============================Combinators============================
 //  are functions with no free variables
 // example = a => b => a*b      combinator
 // example2 = a => b            not a combinator
 
-// ===================free and bound variables==================
+// free and bound variables
 // exam = a => b => a*b*c
 // here a and b is bound variable and c is free variable
 
-// Identity: ======================== a combinator
+// Identity:  a combinator
 const I = a => a;
 // takes an argument and returns that arguments 
 
 
-// Mockingbird: ======================== a combinator
+// Mockingbird: a combinator
 M = f => f(f);
 // takes a function as argument and then appiles that function to itself
 // e.g. M(I) = I because I(I) = I
 // gives function applies to itself
 
 
-// Kestrel: ======================== a combinator
+// Kestrel:  a combinator
 K = a => b => a;
 //  takes an argument and calls another function which takes another argument and returns the first argument.
 // e.g. K(5)(I) = 5
 // always gives first argument
 
 
-// Kite: ======================== a combinator
+// Kite:  a combinator
 // K(I)(x)(y);
 KI = a => b => b;
 //  takes an argument and calls another function which takes another argument and returns that argument.
@@ -55,9 +55,36 @@ KI = a => b => b;
 // always returns the second argument
 
 
-// Cardinal:: ======================== a combinator
+// Cardinal: a combinator
 C = f => a => b=> f(b)(a);
 //  takes a function and two arguments and applies that arguments to function in opposite order.
 // reverse the arguments
 
 
+
+
+
+// ================== Booleans in lambda calculus===================
+
+// True and False
+T = K;
+T.inspect = () => 'true';
+F = KI;
+F.inspect = () => 'false';
+
+// NOT
+not = p => p(F)(T);
+// also 
+// not = p => C(p)(T)(F)  
+
+// And 
+and = a => b => a(b)(a);
+// and = a => b => C(a)(a)(b)
+
+// OR
+or = a => b => a(a)(b);
+// or = a => b => M(a)(b)
+
+// XOR
+xor = a => b => or(and(a)(b))(and(not(a))(not(b)));
+// xor = a => b => a(b(T)(F))(b(F)(T))
