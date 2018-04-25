@@ -70,6 +70,8 @@ TH = f => g => g(f);
 // 
 
 
+// Blackbird: a combinator
+BB = f => g => a => b => f(g(a)(b));
 
 
 // ================== Booleans in lambda calculus===================
@@ -120,3 +122,30 @@ pow = TH;
 // pow = n => k => k(n)
 
 iszero = n => n(K(F))(T);
+
+// please check data structure before this
+phi = p => V(snd(p))(succ(snd(p)));
+
+//  predecessor
+pred = n => fst(n(phi)(V(zero)(zero)));
+
+// substraction
+sub = n => k => k(pred)(n);
+
+// less than or equal if minus one from another gives zero
+leq = n => k => is0(sub(n)(k));
+
+// equal if both are less than or equal to each other
+eq = a => b => and(is0(sub(a)(b)))(is0(sub(b)(a)));
+
+// greater than
+geq = BB(not)(leq);
+
+
+// ==================================== Data structures==============================
+
+// Vireo
+V = a => b => f => f(a)(b);
+// first and second from Vireo
+fst = p => p(K);
+snd = p => p(KI);
